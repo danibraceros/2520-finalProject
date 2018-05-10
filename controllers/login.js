@@ -20,11 +20,6 @@ router.post('/registerchef', (request, response) => {
             status: 0
         });
     }
-    else if (valid === false) {
-        response.render('login.hbs', {
-            status: 1
-        });
-    }
     else if (noRepeat === false) {
         response.render('login.hbs', {
             status: 2
