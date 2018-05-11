@@ -22,7 +22,7 @@
     <div id='loginform' class="forms">
         <br>
         <form action="/getpass" method="post" id='credentialsForm'>
-            Username: <input type="text" name="username" required autofocus oninvalid="validatingInput(this,2)" oninput="setCustomValidity('')"><br>
+            Username: <input type="text" name="username" required oninvalid="validatingInput(this,2)" oninput="setCustomValidity('')"><br>
             Password: <input type="password" name="password" required oninvalid="validatingInput(this,3)" oninput="setCustomValidity('')"><br>
             <div class="submitBox">
                 <button type="submit" value="Submit" class="submitButton">Submit</button>
