@@ -7,11 +7,9 @@ var chefRecords = [];
 /**
  *See if userpass.json exists on drive, if not create file, if so read contents into var chefRecords
  **/
-function checkRecords() {
-    if (fs.existsSync(userpassFile) && fs.readFileSync(userpassFile).length !== 0) {
-        getFile = fs.readFileSync(userpassFile);
-        chefRecords = JSON.parse(getFile);
-    }
+if (fs.existsSync(userpassFile) && fs.readFileSync(userpassFile).length !== 0) {
+    getFile = fs.readFileSync(userpassFile);
+    chefRecords = JSON.parse(getFile);
 }
 
 /**
@@ -20,7 +18,6 @@ function checkRecords() {
  * @param password
  */
 var addToChefFile = (username, password) => {
-    checkRecords();
     var record = {
         "username": username,
         "password": password
@@ -63,8 +60,6 @@ var noRepeatUsers = (newUser) => {
  *Checks if username and password are in userpass.json, if not then request user to log in again
  **/
 var authenticateChef = (inpUsername, inpPassword) => {
-    checkRecords();
-
     var usernameFound = false;
     for (var i = 0; i < chefRecords.length; i++) {
         if (chefRecords[i].username === inpUsername) {
