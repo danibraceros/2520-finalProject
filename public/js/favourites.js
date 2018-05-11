@@ -14,7 +14,6 @@ function setFavouriteRecipes(fr) {
     showSavedFavRecipes();
 }
 
-function showSavedFavRecipes() {
 /**
  * Shows saved favourite recipes to the favourites modal
  */
@@ -87,6 +86,10 @@ function showRecipe(ev, recipe) {
     document.getElementById("favModalRecipe").appendChild(recipeDiv);
 }
 
+/**
+ * Adds a recipe to the list of favourites
+ * @param {object} recipe - the recipe being added
+ */
 function addToFavoritesList(recipe) {
     favRecipes.push(recipe);
     localStorage.setItem('favRecipes', JSON.stringify(favRecipes));
@@ -116,10 +119,22 @@ function addRecipeLabelBtn(recipe) {
 
     var delRecipeBtn = document.createElement('a');
     delRecipeBtn.className = "delFavBtn";
-    delRecipeBtn.innerHTML = " delete";
+    delRecipeBtn.innerHTML = " remove";
     delRecipeBtn.onclick = function (ev) {
-        deleteRecipe(ev, recipe);
-        hideAllContents();
+        swal('Are you sure you want to remove this recipe from favourites?', {
+            buttons: {
+                cancel: "No",
+                catch: {
+                    text: "Yes",
+                    value: "remove"
+                }
+            }
+        }).then((value) => {
+            if (value === "remove") {
+                deleteRecipe(ev, recipe);
+                hideAllContents();
+            }
+        });
     };
 
     var hiddenDel = document.createElement('input');
@@ -138,16 +153,6 @@ function addRecipeLabelBtn(recipe) {
     recipeLabelBtn.appendChild(delRecipeBtn);
     recipeTab.appendChild(delForm);
     recipeTab.appendChild(recipeLabelBtn);
-}
-
-function noRepeat(recipe) {
-    var repeat = false;
-    for (var i = 0; i < favRecipes.length; i++) {
-        if (favRecipes[i].uri === recipe.uri) {
-            repeat = true;
-        }
-    }
-    return !repeat
 }
 
 /**
@@ -171,14 +176,10 @@ function deleteRecipe(ev, recipe) {
             let delForm = $('#del-' + id[1]);
             delForm.on('submit', function (e) {
                 e.preventDefault();
-
                 $.ajax({
                     type: 'POST',
                     url: '/favourite/delete',
-                    data: delForm.serialize(),
-                    success: function () {
-                        swal('deleted');
-                    }
+                    data: delForm.serialize()
                 })
             });
             delForm.submit();
