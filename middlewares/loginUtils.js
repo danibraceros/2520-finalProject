@@ -47,7 +47,6 @@ var validateInput = (userInp, passInp) => {
  * @returns false if user already exists
  */
 var noRepeatUsers = (newUser) => {
-    checkRecords();
     for (var i = 0; i < chefRecords.length; i++) {
         if (chefRecords[i].username.indexOf(newUser) === 0) {
             return false

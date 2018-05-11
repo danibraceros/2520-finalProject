@@ -37,7 +37,9 @@ router.post('/getpass', (request, response) => {
 
     var authenticationResult = utils.authenticateChef(inpUsername, inpPassword);
     if (authenticationResult === 'authentication failure') {
-        response.redirect('/')
+        response.render('login.hbs', {
+            status: 1
+        });
     } else if (authenticationResult === 'logged in') {
         favRecipes = JSON.stringify(favUtils.getFavRecipesForUser(inpUsername));
         response.render('home.hbs', {
